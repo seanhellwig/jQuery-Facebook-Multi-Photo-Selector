@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>jQuery Facebook Multi-Photo Selector (jfmps) - http://seanhellwig.github.com/jfmps/</title>
+	<style type="text/css">
+		body{background:#ccc;}
+	</style>
+	<link rel="stylesheet" href="build/jquery.facebook.multiphoto.select.min.css">
+</head>
+
+<body>
+<div id="jfmps-container"></div>
+
+<input id="jfmps-submit-button" type="submit" value="Use Selected Photos"/>
+
+<div id="fb-root"></div>
+
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.js"></script>
+<script src="build/jquery.facebook.multiphoto.select.min.js"></script>
+<script>
+ (function($){
+	FB.init({appId: '202125033143908', cookie: true});
+
+	FB.getLoginStatus(function(response) {
+		if (response.session) {
+			init();
+		} else {
+			login();
+		}
+	});
+	
+	function login() {
+		FB.login(function(response) {
+			if (response.session) {
+				init();
+			} else {
+				alert('Login Failed!');
+			}
+		}, {perms:'user_photos'});
+	}
+
+	function init() {
+		FB.api('/me', function(response) {
+			$('#jfmps-container').jfmps({
+				noAlbumImagesText:  "This is an extra param telling you that you have no images in this album.",
+				noAlbumsText:  "This is an extra param telling you that you have no albums.",
+				submitCallback: function(jsonData){log(jsonData);},
+				imageSubmitButton: $('#jfmps-submit-button'),
+				maxPhotosSelected: 10,
+				debug: true
+			});
+		});
+	}
+ })(jQuery);
+</script>
+</body>
+</html>
