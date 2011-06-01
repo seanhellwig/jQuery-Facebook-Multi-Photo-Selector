@@ -281,6 +281,8 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				unselectEl.hide();
 			});
 			
+			listItem.append(unselectEl);
+			
 		};
 		
 		/**
