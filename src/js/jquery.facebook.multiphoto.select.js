@@ -245,6 +245,42 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 			imageEl.clone().appendTo(newImageItem);
 			
 			imageList.append(newImageItem);
+			
+			_makeUnselectable(newImageItem);
+		};
+		
+		/**
+		 * Makes a selected image unselectable by addinga hover state and icon to unselect
+		 * @param listItem the <li> element that is to be made capable of unselecting
+		 **/
+		var _makeUnselectable = function(listItem){
+			var unselectEl = $('<span />').html('[x] remove');
+			unselectEl.css({
+				position:'absolute',
+				top: '0',
+				right: '0'
+			});
+			
+			unselectEl.hide();
+			
+			listItem.css('position', 'relative');
+			unselectEl.bind('click', function(e){
+				e.preventDefault();
+				e.stopPropagation();
+				var imageId = $(this).attr('id').split('selected-')[1];
+				
+				$('#fb-albumimage-' + imageId, albumPhotosContainer).removeClass('selected');
+				
+				delete selectedPhotos[imageId];
+			
+			});
+			listItem.bind('mouseenter', function(e){
+				unselectEl.show();
+			});
+			listItem.bind('mouseleave', function(e){
+				unselectEl.hide();
+			});
+			
 		};
 		
 		/**
