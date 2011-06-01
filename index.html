@@ -46,12 +46,15 @@
 
 	function init() {
 		FB.api('/me', function(response) {
+			// ALL params are OPTIONAL.  Defaults are passed in to show available params.
 			$('#jfmps-container').jfmps({
-				noAlbumImagesText:  "This is an extra param telling you that you have no images in this album.",
-				noAlbumsText:  "This is an extra param telling you that you have no albums.",
-				submitCallback: function(jsonData){log(jsonData);},
+				noAlbumImagesText:  'You have no images in this album.',
+				noAlbumsText:  'You do not have any albums.',
+				submitCallback: function(jsonData){ alert(jsonData); },
 				imageSubmitButton: $('#jfmps-submit-button'),
 				maxPhotosSelected: 10,
+				numAlbumColumns: 4,
+				numPhotosColumns: 6,
 				debug: true
 			});
 		});
