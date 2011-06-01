@@ -265,7 +265,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				
 				var imageId = listItem.attr('id').split('selected-')[1];
 				if (settings.debug) { log('deleted: ' + imageId); }
-				$('#fb-albumimage-' + imageId, albumPhotosContainer).removeClass('selected');
+				$('#fb-albumimage-' + imageId).removeClass('selected');
 				
 				delete selectedPhotos[imageId];
 				
