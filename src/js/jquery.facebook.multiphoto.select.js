@@ -262,8 +262,9 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 			unselectEl.bind('click', function(e){
 				e.preventDefault();
 				e.stopPropagation();
-				var imageId = $(this).attr('id').split('selected-')[1];
 				
+				var imageId = $(this).attr('id').split('selected-')[1];
+				if (settings.debug) { log('deleted: ' + imageId); }
 				$('#fb-albumimage-' + imageId, albumPhotosContainer).removeClass('selected');
 				
 				delete selectedPhotos[imageId];
