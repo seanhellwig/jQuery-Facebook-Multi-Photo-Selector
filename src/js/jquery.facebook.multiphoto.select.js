@@ -263,7 +263,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				e.preventDefault();
 				e.stopPropagation();
 				
-				var imageId = $(this).attr('id').split('selected-')[1];
+				var imageId = listItem.attr('id').split('selected-')[1];
 				if (settings.debug) { log('deleted: ' + imageId); }
 				$('#fb-albumimage-' + imageId, albumPhotosContainer).removeClass('selected');
 				
