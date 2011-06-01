@@ -267,6 +267,8 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				$('#fb-albumimage-' + imageId, albumPhotosContainer).removeClass('selected');
 				
 				delete selectedPhotos[imageId];
+				
+				listItem.remove();
 			
 			});
 			listItem.bind('mouseenter', function(e){
