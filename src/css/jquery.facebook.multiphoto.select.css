@@ -126,3 +126,11 @@
 #jfmps-button-container {clear:both;}
 #jfmps-clear-button {display:none;}
 .newRow {clear:left;}
+.jfmps-selected-unselect{
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    background: #000;
+    opacity: 0.8;
+}

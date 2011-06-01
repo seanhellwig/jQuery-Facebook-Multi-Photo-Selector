@@ -254,12 +254,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 		 * @param listItem the <li> element that is to be made capable of unselecting
 		 **/
 		var _makeUnselectable = function(listItem){
-			var unselectEl = $('<span />').html('[x] remove');
-			unselectEl.css({
-				position:'absolute',
-				top: '0',
-				right: '0'
-			});
+			var unselectEl = $('<span class="jfmps-selected-unselect"/>').html('[x] remove');
 			
 			unselectEl.hide();
 			
