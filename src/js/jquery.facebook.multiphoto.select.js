@@ -62,7 +62,9 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				if (settings.debug) {log('settings.numAlbumColumns & settings.numPhotosColumns must be greater than 0');}
 				return;
 			}
-			countSelector.html(selectedPhotosCount + ' / ' + settings.maxPhotosSelected);
+			
+			_updateSelectedCountDisplay();
+			
 			FB.api('/me/albums', _showAlbumContent);
 		};
 		
@@ -71,7 +73,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 		 * @param response Facebook Response Object
 		*/
 		var _showAlbumContent = function(response){
-			if (settings.debug) {log(response);}
+			if (settings.debug) {log('FB API Response /me/albums:', response);}
 			
 			if (response.data && response.data.length > 0) {
 				var albums = response.data,
@@ -134,7 +136,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 			
 			if (albumImageCache[albumId] === undefined) {
 				FB.api('/' + albumId + '/photos', function(response){
-					if (settings.debug) {log(response);}
+					if (settings.debug) {log('FB API Response /' + albumId + '/photos:', response);}
 					
 					albumImageCache[albumId] = response.data;
 					_showAlbumImages(albumId);
@@ -192,7 +194,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 		var _makeImageSelectable = function(imageContainer, imageData){
 			var imageId = imageContainer.data('image_id');
 			
-			imageContainer.bind('click', function(e){				
+			imageContainer.bind('click', function(e){
 				if (selectedPhotos[imageId] === undefined) {
 					if (selectedPhotosCount < settings.maxPhotosSelected) {
 						selectedPhotos[imageId] = imageData;
@@ -201,7 +203,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 						_addToSelectedList(imageContainer);
 				
 						selectedPhotosCount += 1;
-						countSelector.html(selectedPhotosCount + ' / ' + settings.maxPhotosSelected);
+						_updateSelectedCountDisplay();
 						
 						settings.selectedImageCallback !== null ? settings.selectedImageCallback() : null;
 					}
@@ -210,18 +212,9 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 					delete selectedPhotos[imageId];
 				
 					_removeFromSelectedList(imageContainer);
-				
-					selectedPhotosCount -= 1;
-					countSelector.html(selectedPhotosCount + ' / ' + settings.maxPhotosSelected);
 				}
 			
-				if (selectedPhotosCount > 0) {
-					settings.imageSubmitButton.show();
-					imageClearButton.show();
-				}else{
-					settings.imageSubmitButton.hide();
-					imageClearButton.hide();
-				}
+				_updateActionButtons();
 			});
 		};
 		
@@ -270,6 +263,9 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				delete selectedPhotos[imageId];
 				
 				listItem.remove();
+				
+				selectedPhotosCount -= 1;
+				_updateSelectedCountDisplay();
 			
 			});
 			listItem.bind('mouseenter', function(e){
@@ -292,6 +288,10 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 				imageList = $('ul', selectedPhotosContainer).eq(0);
 				
 				$('li#selected-' + imageId, imageList).remove();
+				
+				selectedPhotosCount -= 1;
+				
+				_updateSelectedCountDisplay();
 		};
 		
 		/**
@@ -349,9 +349,32 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 			
 			selectedPhotosCount = 0;
 			
-			countSelector.html(selectedPhotosCount);
+			_updateSelectedCountDisplay();
 			
 			imageClearButton.hide();
+		};
+		
+		
+		/**
+		 * Toggles display state clear and submit button
+		**/
+		var _updateActionButtons = function(){
+			if (selectedPhotosCount > 0) {
+				settings.imageSubmitButton.show();
+				imageClearButton.show();
+			}else{
+				settings.imageSubmitButton.hide();
+				imageClearButton.hide();
+			}
+		};
+		
+		/**
+		 * Updates the DOM element to show the current num of selected photos
+		**/
+		var _updateSelectedCountDisplay = function(){
+			countSelector.html(selectedPhotosCount + ' / ' + settings.maxPhotosSelected);
+			
+			_updateActionButtons();
 		};
 		
 		/**
