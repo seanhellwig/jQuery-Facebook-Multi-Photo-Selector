@@ -7,6 +7,10 @@ Inspired by: https://github.com/mbrevoort/jquery-facebook-multi-friend-selector 
 
 Demo: http://seanhellwig.github.com/jfmps/
 
+
+Build: cd into dir, run a make on a unix shell, css / js will be generated in build dir.  (sorry im so bad at this explanation thing...)
+
+
 TODO:  Documentation
 
 Javascript minified using Google Closure Compiler - http://code.google.com/closure/compiler/
