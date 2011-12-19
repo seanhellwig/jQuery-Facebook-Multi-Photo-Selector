@@ -111,7 +111,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
 			albumEl.data('album_id', album.id);
 			
 			var albumName = $('<div class="jfmps-albumname" />').text(album.name);
-			var albumCoverImage = $('<img width="50" src="https://graph.facebook.com/' + album.id  + '/picture?access_token=' + FB.getAuthResponse().access_token + '&amp;type=thumbnail" />');
+			var albumCoverImage = $('<img width="50" src="https://graph.facebook.com/' + album.id  + '/picture?access_token=' + FB.getAuthResponse().accessToken + '&amp;type=thumbnail" />');
 			
 			albumEl.append(albumCoverImage);
 			
@@ -167,7 +167,7 @@ window.log=function(){log.history=log.history||[];log.history.push(arguments);if
     					imageContainer.addClass('selected');
     				}
 				
-    				var albumImage = $('<img width="75" src="https://graph.facebook.com/' + albumImagesData[i].id  + '/picture?access_token=' + FB.getAuthResponse().access_token + '&amp;type=thumbnail" />');
+    				var albumImage = $('<img width="75" src="https://graph.facebook.com/' + albumImagesData[i].id  + '/picture?access_token=' + FB.getAuthResponse().accessToken + '&amp;type=thumbnail" />');
 				
     				imageContainer.append(albumImage);
 				
