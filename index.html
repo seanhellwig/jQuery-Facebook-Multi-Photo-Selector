@@ -24,7 +24,7 @@
 <script>
  (function($){
 	/** CHANGE THIS TO YOUR FACEBOOK APP ID **/
-	FB.init({appId: '202125033143908', cookie: true});
+	FB.init({appId: '202125033143908', cookie: true, oauth: true});
 
 	FB.getLoginStatus(function(response) {
 		if (response.session) {
@@ -36,12 +36,12 @@
 	
 	function login() {
 		FB.login(function(response) {
-			if (response.session) {
+			if (response.authResponse) {
 				init();
 			} else {
 				alert('Login Failed!');
 			}
-		}, {perms:'user_photos'});
+		}, {scope:'user_photos'});
 	}
 
 	function init() {
